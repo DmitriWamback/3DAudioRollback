@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plot
 
-steps = 200
-rollback = 100
-dropoff = 10
+steps = 1000
+rollback = 1000
+dropoff = 1
 
 def clamp(a, amin, amax):
     if a > amax: return amax
@@ -12,8 +12,8 @@ def clamp(a, amin, amax):
 
 def P(magnitude): # non-linear rollback
     global dropoff
-    dropoff = max(dropoff, 10)
-    return (clamp(rollback/max(min(magnitude + rollback / dropoff, rollback), 0.0001) - 1, 0, dropoff) / dropoff)
+    dropoff = max(dropoff, 5)
+    return (clamp(rollback/max(min(magnitude + rollback / (dropoff*1.2), rollback), 0.0001) - 1, 0, dropoff) / dropoff)
 
 def L(magnitude): # linear rollback
     return 1 - (clamp(magnitude, 0, rollback) / rollback)
